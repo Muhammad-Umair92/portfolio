@@ -1,653 +1,206 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <title>Muhammad Umair  Senior React Native Developer</title>
-    <meta name="description" content="Senior React Native developer in Karachi. Shipped enterprise field apps, consumer IAP products, and dual-store releases — Jan-IT, Rent Now, Kidzlim." />
-    <meta name="theme-color" content="#0c1a1f" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Sora:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <style>
-          :root {
-                  --ink: #0c1a1f;
-                  --ink-soft: #1a333c;
-                  --muted: #5a6e76;
-                  --fog: #d7e4e8;
-                  --sand: #e8f0f2;
-                  --paper: #f3f7f8;
-                  --accent: #c45c26;
-                  --accent-deep: #9a3f12;
-                  --sea: #1f6f78;
-                  --sea-glow: rgba(31, 111, 120, 0.22);
-                  --line: rgba(12, 26, 31, 0.12);
-                  --white: #fafcfb;
-          }
-
-          *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-          html { scroll-behavior: smooth; }
-
-          body {
-                  font-family: "Sora", sans-serif;
-                  color: var(--ink);
-                  background-color: var(--paper);
-                  background-image:
-                            radial-gradient(ellipse 90% 55% at 100% -5%, var(--sea-glow), transparent 55%),
-                            radial-gradient(ellipse 70% 45% at -15% 30%, rgba(196, 92, 38, 0.12), transparent 50%),
-                            linear-gradient(165deg, #eef5f6 0%, var(--paper) 38%, #e4eef0 100%);
-                  background-attachment: fixed;
-                  line-height: 1.55;
-                  min-height: 100vh;
-                  overflow-x: hidden;
-          }
-
-          a { color: inherit; }
-
-          .grain {
-                  pointer-events: none;
-                  position: fixed;
-                  inset: 0;
-                  z-index: 0;
-                  opacity: 0.035;
-                  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-          }
-
-          .wrap {
-                  position: relative;
-                  z-index: 1;
-                  width: min(1100px, calc(100% - 2.5rem));
-                  margin-inline: auto;
-          }
-
-          /* ── NAV ─ */
-          .nav {
-                  display: flex;
-                  justify-content: space-between;
-                  align-items: center;
-                  padding: 1.35rem 0;
-                  animation: rise 0.7s ease both;
-          }
-
-          .nav-brand {
-                  font-family: "Instrument Serif", serif;
-                  font-size: 1.35rem;
-                  letter-spacing: -0.02em;
-                  text-decoration: none;
-          }
-
-          .nav-links {
-                  display: flex;
-                  gap: 1.4rem;
-                  list-style: none;
-                  font-size: 0.88rem;
-                  font-weight: 500;
-                  color: var(--muted);
-          }
-
-          .nav-links a {
-                  text-decoration: none;
-                  transition: color 0.2s;
-          }
-
-          .nav-links a:hover { color: var(--accent-deep); }
-
-          /* ── HERO ── */
-          .hero {
-                  min-height: calc(100svh - 4.5rem);
-                  display: grid;
-                  grid-template-columns: 1.05fr 0.95fr;
-                  gap: clamp(2rem, 5vw, 4rem);
-                  align-items: center;
-                  padding: 1.5rem 0 3.5rem;
-          }
-
-          .hero-copy { max-width: 34rem; }
-
-          .hero h1 {
-                  font-family: "Instrument Serif", serif;
-                  font-size: clamp(3.2rem, 8vw, 5.6rem);
-                  font-weight: 400;
-                  line-height: 0.95;
-                  letter-spacing: -0.03em;
-                  margin-bottom: 1.15rem;
-                  animation: rise 0.8s 0.06s ease both;
-          }
-
-          .hero h1 em {
-                  font-style: italic;
-                  color: var(--sea);
-          }
-
-          .hero-lead {
-                  font-size: clamp(1.02rem, 2vw, 1.18rem);
-                  color: var(--muted);
-                  font-weight: 300;
-                  margin-bottom: 1.85rem;
-                  animation: rise 0.8s 0.14s ease both;
-          }
-
-          .cta-row {
-                  display: flex;
-                  flex-wrap: wrap;
-                  gap: 0.7rem;
-                  animation: rise 0.8s 0.22s ease both;
-          }
-
-          .btn {
-                  display: inline-flex;
-                  align-items: center;
-                  justify-content: center;
-                  padding: 0.85rem 1.35rem;
-                  border-radius: 0.35rem;
-                  text-decoration: none;
-                  font-weight: 500;
-                  font-size: 0.92rem;
-                  transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
-          }
-
-          .btn:hover { transform: translateY(-2px); }
-
-          .btn-primary {
-                  background: var(--ink);
-                  color: var(--white);
-          }
-
-          .btn-primary:hover { background: var(--accent-deep); }
-
-          .btn-ghost {
-                  border: 1px solid var(--line);
-                  background: rgba(255, 255, 255, 0.45);
-                  backdrop-filter: blur(8px);
-          }
-
-          .btn-ghost:hover {
-                  border-color: var(--sea);
-                  color: var(--sea);
-          }
-
-          .hero-visual {
-                  position: relative;
-                  height: min(540px, 68vh);
-                  animation: rise 0.95s 0.16s ease both;
-          }
-
-          .hero-visual::before {
-                  content: "";
-                  position: absolute;
-                  inset: 8% 6% 12% 10%;
-                  background:
-                            linear-gradient(145deg, rgba(31, 111, 120, 0.35), transparent 55%),
-                            linear-gradient(320deg, rgba(196, 92, 38, 0.28), transparent 45%),
-                            radial-gradient(circle at 40% 40%, #2a8a94, #0c1a1f 70%);
-                  border-radius: 42% 58% 48% 52% / 52% 42% 58% 48%;
-                  filter: blur(0.5px);
-                  animation: morph 14s ease-in-out infinite alternate;
-          }
-
-          .hero-panel {
-                  position: absolute;
-                  inset: 14% 12% 18% 18%;
-                  border: 1px solid rgba(255, 255, 255, 0.22);
-                  background: linear-gradient(160deg, rgba(12, 26, 31, 0.72), rgba(31, 111, 120, 0.55));
-                  backdrop-filter: blur(12px);
-                  color: var(--white);
-                  padding: 1.75rem 1.5rem;
-                  display: flex;
-                  flex-direction: column;
-                  gap: 0.85rem;
-                  box-shadow: 0 28px 60px rgba(12, 26, 31, 0.28);
-                  transform: rotate(-3.5deg);
-                  animation: float 6.5s ease-in-out infinite;
-          }
-
-          .hero-panel .chip {
-                  font-size: 0.72rem;
-                  letter-spacing: 0.12em;
-                  text-transform: uppercase;
-                  opacity: 0.72;
-                  font-weight: 500;
-          }
-
-          .hero-panel .panel-title {
-                  font-family: "Instrument Serif", serif;
-                  font-size: clamp(1.55rem, 2.5vw, 1.95rem);
-                  line-height: 1.15;
-                  font-weight: 400;
-          }
-
-          .hero-panel .panel-meta {
-                  margin-top: auto;
-                  font-size: 0.88rem;
-                  font-weight: 300;
-                  opacity: 0.85;
-                  border-top: 1px solid rgba(255, 255, 255, 0.18);
-                  padding-top: 0.9rem;
-          }
-
-          /* ─ SECTIONS ─ */
-          section { padding: 4.75rem 0; }
-
-          .section-kicker {
-                  font-size: 0.75rem;
-                  font-weight: 600;
-                  letter-spacing: 0.14em;
-                  text-transform: uppercase;
-                  color: var(--accent-deep);
-                  margin-bottom: 0.65rem;
-          }
-
-          .section-head {
-                  margin-bottom: 2.25rem;
-                  max-width: 36rem;
-          }
-
-          .section-head h2 {
-                  font-family: "Instrument Serif", serif;
-                  font-size: clamp(2rem, 4vw, 2.75rem);
-                  font-weight: 400;
-                  letter-spacing: -0.02em;
-                  line-height: 1.1;
-                  margin-bottom: 0.55rem;
-          }
-
-          .section-head p {
-                  color: var(--muted);
-                  font-weight: 300;
-                  font-size: 1rem;
-          }
-
-          /* ─ WORK ── */
-          .work-list {
-                  display: grid;
-                  gap: 0;
-                  border-top: 1px solid var(--line);
-          }
-
-          .work-item {
-                  display: grid;
-                  grid-template-columns: 5rem 1fr;
-                  gap: 1.25rem;
-                  padding: 2rem 0;
-                  border-bottom: 1px solid var(--line);
-                  transition: background 0.25s;
-          }
-
-          .work-item:hover { background: rgba(255, 255, 255, 0.35); }
-
-          .work-num {
-                  font-family: "Instrument Serif", serif;
-                  font-size: 1.65rem;
-                  color: var(--sea);
-                  padding-top: 0.1rem;
-          }
-
-          .work-meta {
-                  display: flex;
-                  flex-wrap: wrap;
-                  gap: 0.65rem 1rem;
-                  margin-bottom: 0.5rem;
-                  font-size: 0.78rem;
-                  font-weight: 500;
-                  letter-spacing: 0.04em;
-                  text-transform: uppercase;
-                  color: var(--muted);
-          }
-
-          .work-meta span + span::before {
-                  content: "·";
-                  margin-right: 1rem;
-                  opacity: 0.5;
-          }
-
-          .work-item h3 {
-                  font-family: "Instrument Serif", serif;
-                  font-size: clamp(1.45rem, 2.6vw, 1.9rem);
-                  font-weight: 400;
-                  letter-spacing: -0.02em;
-                  margin-bottom: 0.55rem;
-          }
-
-          .work-item p {
-                  color: var(--muted);
-                  max-width: 48rem;
-                  font-weight: 300;
-                  margin-bottom: 1rem;
-          }
-
-          .work-item strong { color: var(--ink); font-weight: 500; }
-
-          .work-links {
-                  display: flex;
-                  flex-wrap: wrap;
-                  gap: 1rem;
-                  font-size: 0.9rem;
-                  font-weight: 500;
-          }
-
-          .work-links a {
-                  text-decoration: none;
-                  border-bottom: 1px solid rgba(196, 92, 38, 0.45);
-                  color: var(--accent-deep);
-                  transition: border-color 0.2s, color 0.2s;
-          }
-
-          .work-links a:hover {
-                  color: var(--ink);
-                  border-color: var(--ink);
-          }
-
-          .work-links .private {
-                  color: var(--muted);
-                  font-weight: 400;
-                  border: none;
-          }
-
-          /* ── ABOUT  */
-          .about-grid {
-                  display: grid;
-                  grid-template-columns: 1.15fr 0.85fr;
-                  gap: 2.75rem;
-                  align-items: start;
-          }
-
-          .about-copy p {
-                  color: var(--muted);
-                  font-weight: 300;
-                  font-size: 1.05rem;
-                  margin-bottom: 1rem;
-          }
-
-          .about-copy strong { color: var(--ink); font-weight: 500; }
-
-          .skills {
-                  display: grid;
-                  gap: 1.15rem;
-          }
-
-          .skill-group dt {
-                  font-size: 0.72rem;
-                  font-weight: 600;
-                  letter-spacing: 0.1em;
-                  text-transform: uppercase;
-                  color: var(--sea);
-                  margin-bottom: 0.35rem;
-          }
-
-          .skill-group dd {
-                  color: var(--ink-soft);
-                  font-size: 0.92rem;
-                  font-weight: 400;
-                  line-height: 1.45;
-          }
-
-          /* ─ CONTACT ── */
-          .contact {
-                  margin: 1rem 0 3.5rem;
-                  padding: 2.75rem 0;
-                  border-top: 1px solid var(--line);
-                  border-bottom: 1px solid var(--line);
-          }
-
-          .contact h2 {
-                  font-family: "Instrument Serif", serif;
-                  font-size: clamp(2rem, 4vw, 2.7rem);
-                  font-weight: 400;
-                  margin-bottom: 0.65rem;
-          }
-
-          .contact > p {
-                  color: var(--muted);
-                  margin-bottom: 1.4rem;
-                  max-width: 32rem;
-                  font-weight: 300;
-          }
-
-          footer {
-                  padding: 0 0 2.75rem;
-                  color: var(--muted);
-                  font-size: 0.85rem;
-                  display: flex;
-                  justify-content: space-between;
-                  gap: 1rem;
-                  flex-wrap: wrap;
-          }
-
-          footer a {
-                  text-decoration: none;
-                  border-bottom: 1px solid transparent;
-          }
-
-          footer a:hover { border-color: currentColor; }
-
-          @keyframes rise {
-                  from { opacity: 0; transform: translateY(18px); }
-                  to { opacity: 1; transform: translateY(0); }
-          }
-
-          @keyframes float {
-                  0%, 100% { transform: rotate(-3.5deg) translateY(0); }
-                  50% { transform: rotate(-2.5deg) translateY(-10px); }
-          }
-
-          @keyframes morph {
-                  from { border-radius: 42% 58% 48% 52% / 52% 42% 58% 48%; transform: scale(1); }
-                  to { border-radius: 58% 42% 52% 48% / 42% 58% 42% 58%; transform: scale(1.04); }
-          }
-
-          @media (prefers-reduced-motion: reduce) {
-                  *, *::before, *::after {
-                            animation-duration: 0.01ms !important;
-                            animation-iteration-count: 1 !important;
-                            transition-duration: 0.01ms !important;
-                  }
-                  html { scroll-behavior: auto; }
-          }
-
-          @media (max-width: 880px) {
-                  .hero,
-                  .about-grid { grid-template-columns: 1fr; }
-
-                  .hero {
-                            min-height: auto;
-                            padding-top: 0.5rem;
-                  }
-
-                  .hero-visual {
-                            height: 320px;
-                            order: -1;
-                  }
-
-                  .hero-panel {
-                            inset: 10% 14% 14% 14%;
-                            transform: rotate(-2deg);
-                  }
-
-                  .work-item { grid-template-columns: 3.25rem 1fr; gap: 0.85rem; }
-
-                  .nav-links { gap: 1rem; font-size: 0.82rem; }
-          }
-
-          @media (max-width: 520px) {
-                  .wrap { width: min(100% - 1.4rem, 1100px); }
-                  .nav-links .hide-sm { display: none; }
-                  .hero h1 { font-size: clamp(2.8rem, 14vw, 3.6rem); }
-          }
-        </style>
-  </head>
-  <body>
-      <div class="grain" aria-hidden="true"></div>div>
-      <div class="wrap">
-            <nav class="nav" aria-label="Primary">
-                    <a class="nav-brand" href="#top">Muhammad Umair</a>a>
-                    <ul class="nav-links">
-                              <li><a href="#work">Work</a>a></li>
-                            <li class="hide-sm"><a href="#about">About</a>a></li>
-                            <li><a href="#contact">Contact</a>a></li>
-                    </ul>ul>
-            </nav>nav>
-      
-          <header class="hero" id="top">
-                <div class="hero-copy">
-                        <h1>Muhammad<br /><em>Umair</em></h1>
-                        <p class="hero-lead">
-                          Senior React Native developer in Karachi. I ship production iOS &amp; Android apps —
-                          enterprise field tools, consumer products, and dual-store releases.
-                        </p>p>
-                        <div class="cta-row">
-                                  <a class="btn btn-primary" href="#work">View selected work</a>a>
-                                  <a class="btn btn-ghost" href="mailto:muhammadumair9290@gmail.com">Email me</a>a>
-                        </div>div>
-                </div>div>
-                <div class="hero-visual" aria-hidden="true">
-                        <div class="hero-panel">
-                                  <div class="chip">React Native  8+ years</div>div>
-                                  <div class="panel-title">Built for the store — and built to stay up.</div>div>
-                                  <div class="panel-meta">Firebase · TypeScript · IAP · App Store &amp; Play</div>div>
-                        </div>div>
-                </div>div>
-          </header>header>
-      
-          <section id="work">
-                <div class="section-head">
-                        <p class="section-kicker">Case studies</p>p>
-                        <h2>Selected work</h2>
-                        <p>Three shipped products across enterprise scale, rentals, and kids learning.</p>
-                </div>div>
-          
-                <div class="work-list">
-                        <article class="work-item">
-                                  <div class="work-num">01</div>div>
-                                  <div>
-                                                <div class="work-meta">
-                                                                <span>Enterprise</span>
-                                                              <span>DPL  2023–2026</span>
-                                                              <span>Live on Play</span>
-                                                </div>
-                                              <h3>Jan-IT by The Facilities Group</h3>
-                                              <p>
-                                                              Sole React Native engineer on a field work-order app for National Janitorial Solutions
-                                                              (The Facilities Group) — serving <strong>10+ industries</strong> and
-                                                <strong>27,000+ locations</strong> across the US and Canada. Firebase (Firestore, Auth, FCM),
-                                                REST APIs, and full ownership from architecture through store release.
-                                              </p>
-                                              <div class="work-links">
-                                                            <a href="https://play.google.com/store/apps/details?id=com.facilitiesgroup.janit" target="_blank" rel="noopener noreferrer">Google Play ↗</a>a>
-                                              </div>
-                                  </div>
-                        </article>article>
-                
-                        <article class="work-item">
-                                  <div class="work-num">02</div>
-                                  <div>
-                                              <div class="work-meta">
-                                                            <span>Marketplace</span>
-                                                            <span>iOS + Android</span>
-                                                            <span>IAP</span>
-                                              </div>
-                                              <h3>Rent Now</h3>
-                                              <p>
-                                                              Cross-platform rental property app — browse listings, connect with landlords,
-                                                              and subscribe via in-app purchases. Shipped and maintained on both iOS and Android.
-                                              </p>
-                                                <div class="work-links">
-                                                                <a href="https://apps.apple.com/us/app/rent-now-co/id1539139275" target="_blank" rel="noopener noreferrer">App Store ↗</a>a>
-                                                                <a href="https://play.google.com/store/apps/details?id=com.rentnow&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Play ↗</a>a>
-                                                </div>
-                                  </div>
-                        </article>article>
-
-                          <article class="work-item">
-                                      <div class="work-num">03</div>
-                                      <div>
-                                                    <div class="work-meta">
-                                                                    <span>Consumer</span>
-                                                                    <span>Kidzlim · 20222023</span>
-                                                                    <span>StoreKit + Play Billing</span>
-                                                    </div>
-                                                    <h3>Kidzlim</h3>
-                                                    <p>
-                                                                    Islamic kids learning app — Quran, Arabic, and values through games and stories.
-                                                                    Trusted by parents across <strong>20+ countries</strong>. Architected end-to-end
-                                                    monthly subscription IAP (Apple StoreKit + Google Play Billing), receipt validation,
-                                                    and production stability work that sustained a 5-star store rating.
-                                                    </p>
-                                                  <div class="work-links">
-                                                                <a href="https://www.kidzlim.co.uk/" target="_blank" rel="noopener noreferrer">Website ↗</a>a>
-                                                  </div>
-                                      </div>
-                          </article>article>
-                </div>
-          </section>section>
-      
-          <section id="about">
-                <div class="section-head">
-                        <p class="section-kicker">About</p>
-                        <h2>Focus: reliable mobile products, end to end</h2>
-                </div>
-                <div class="about-grid">
-                        <div class="about-copy">
-                                  <p>
-                                    Based in <strong>Karachi, Pakistan</strong>. I build and ship production React Native apps 
-                                    from design handoff and TypeScript codebases through Firebase, REST integrations,
-                                    IAP monetization, and App Store / Google Play submission.
-                                  </p>
-                                  <p>
-                                                Comfortable as the primary or sole mobile engineer on a product. Earlier roles at
-                                                mParsec, ABTACH, and Expertizo covered additional client React Native and React web delivery.
-                                                BS Software Engineering, Sir Syed University (20142017).
-                                  </p>
-                        </div>
-                          <dl class="skills">
-                                      <div class="skill-group">
-                                                    <dt>Mobile</dt>
-                                                  <dd>React Native, iOS, Android, Expo, React Navigation</dd>
-                                      </div>
-                                    <div class="skill-group">
-                                                <dt>Languages &amp; state</dt>
-                                                <dd>TypeScript, JavaScript (ES6+), Redux, Redux Toolkit, Context API</dd>
-                                    </div>
-                                    <div class="skill-group">
-                                                <dt>Monetization &amp; stores</dt>
-                                                <dd>IAP, Apple StoreKit, Google Play Billing, App Store Connect, Play Console</dd>
-                                    </div>
-                                    <div class="skill-group">
-                                                <dt>Backend &amp; quality</dt>
-                                                <dd>Firebase, Firestore, Auth, FCM, REST APIs, Jest, React Native Testing Library</dd>
-                                    </div>
-                          </dl>dl>
-                </div>
-          </section>section>
-      
-          <section id="contact" class="contact">
-                <h2>Lets build something that ships</h2>
-                <p>Open to senior React Native / mobile roles. Send a note, or connect on LinkedIn and GitHub.</p>
-                <div class="cta-row">
-                        <a class="btn btn-primary" href="mailto:muhammadumair9290@gmail.com">muhammadumair9290@gmail.com</a>a>
-                        <a class="btn btn-ghost" href="https://linkedin.com/in/umair92" target="_blank" rel="noopener noreferrer">LinkedIn</a>a>
-                        <a class="btn btn-ghost" href="https://github.com/Muhammad-Umair92" target="_blank" rel="noopener noreferrer">GitHub</a>a>
-                        <a class="btn btn-ghost" href="tel:+923432462572">+92 343 246 2572</a>a>
-                </div>
-          </section>section>
-      
-          <footer>
-                  <span>© 2026 Muhammad Umair</span>
-                  <span>
-                            <a href="https://github.com/Muhammad-Umair92" target="_blank" rel="noopener noreferrer">github.com/Muhammad-Umair92</a>a>
-                            · Karachi
-                  </span>
-          </footer>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Muhammad Umair — Senior React Native Developer</title>
+  <meta name="description" content="Senior React Native developer in Karachi. Shipped enterprise field apps, consumer IAP products, and dual-store releases — Jan-IT, Rent Now, Kidzlim." />
+  <meta name="theme-color" content="#f6f3ee" />
+  <meta property="og:title" content="Muhammad Umair — Senior React Native Developer" />
+  <meta property="og:description" content="Senior React Native developer in Karachi. Shipped enterprise field apps, consumer IAP products, and dual-store releases — Jan-IT, Rent Now, Kidzlim." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="preload" href="fonts/source-sans.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/newsreader-roman.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="fonts/newsreader-italic.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <div class="wrap nav">
+      <a class="brand" href="#top">Muhammad Umair</a>
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <a class="nav-email" href="mailto:muhammadumair9290@gmail.com">Email me</a>
+    </div>
+  </header>
+
+  <main id="main">
+    <header class="hero wrap" id="top">
+      <div class="hero-copy">
+        <h1>Muhammad<br /><em>Umair</em></h1>
+        <p class="lead">
+          Senior React Native developer in Karachi. I ship production iOS &amp; Android apps —
+          enterprise field tools, consumer products, and dual-store releases.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#work">View selected work</a>
+          <a class="btn btn-ghost" href="mailto:muhammadumair9290@gmail.com">Email me</a>
+        </div>
       </div>
-  </body>
-</html>html>
+      <aside class="credentials" aria-label="Summary">
+        <p class="chip">React Native · 8+ years</p>
+        <p>Built for the store — and built to stay up.</p>
+        <p class="credentials-meta">Firebase · TypeScript · IAP · App Store &amp; Play</p>
+      </aside>
+    </header>
 
-          </footer></p></dd></dd></dt>
-                                  </p></strong></strong>
-                                                    </p>
-                                              </p></strong></strong>
-                                              </p></h3></span></span>
-                                  </div></p></em></h1></li></li>
-  </body>
-    </style></title>
-  </head>
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">Case studies</p>
+          <h2>Selected work</h2>
+          <p>Three shipped products across enterprise scale, rentals, and kids learning.</p>
+        </div>
+
+        <div class="work-list">
+          <article class="case">
+            <div class="case-index">01</div>
+            <div class="case-main">
+              <h3>Jan-IT by The Facilities Group</h3>
+              <ul class="meta">
+                <li>Enterprise</li>
+                <li>DPL · 2023–2026</li>
+                <li>Live on Play</li>
+              </ul>
+              <p>
+                Sole React Native engineer on a field work-order app for National Janitorial Solutions
+                (The Facilities Group) — serving <strong>10+ industries</strong> and
+                <strong>27,000+ locations</strong> across the US and Canada. Firebase (Firestore, Auth, FCM),
+                REST APIs, and full ownership from architecture through store release.
+              </p>
+              <div class="case-actions">
+                <a class="store" href="https://play.google.com/store/apps/details?id=com.facilitiesgroup.janit" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.2v13.6l11.2-6.8L8 5.2z"/></svg>
+                  Google Play <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-index">02</div>
+            <div class="case-main">
+              <h3>Rent Now</h3>
+              <ul class="meta">
+                <li>Marketplace</li>
+                <li>iOS + Android</li>
+                <li>IAP</li>
+              </ul>
+              <p>
+                Cross-platform rental property app — browse listings, connect with landlords,
+                and subscribe via in-app purchases. Shipped and maintained on both iOS and Android.
+              </p>
+              <div class="case-actions">
+                <a class="store" href="https://apps.apple.com/us/app/rent-now-co/id1539139275" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="3" width="10" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="17.4" r="0.9" fill="currentColor"/></svg>
+                  App Store <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
+                </a>
+                <a class="store" href="https://play.google.com/store/apps/details?id=com.rentnow&amp;hl=en" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.2v13.6l11.2-6.8L8 5.2z"/></svg>
+                  Google Play <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+          </article>
+
+          <article class="case">
+            <div class="case-index">03</div>
+            <div class="case-main">
+              <h3>Kidzlim</h3>
+              <ul class="meta">
+                <li>Consumer</li>
+                <li>Kidzlim · 2022–2023</li>
+                <li>StoreKit + Play Billing</li>
+              </ul>
+              <p>
+                Islamic kids learning app — Quran, Arabic, and values through games and stories.
+                Trusted by parents across <strong>20+ countries</strong>. Architected end-to-end
+                monthly subscription IAP (Apple StoreKit + Google Play Billing), receipt validation,
+                and production stability work that sustained a 5-star store rating.
+              </p>
+              <div class="case-actions">
+                <a class="store" href="https://www.kidzlim.co.uk/" target="_blank" rel="noopener noreferrer">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4.2 12h15.6M12 4.2c2.3 2.4 2.3 13.2 0 15.6M12 4.2c-2.3 2.4-2.3 13.2 0 15.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                  Website <span aria-hidden="true">↗</span><span class="sr-only"> (opens in a new tab)</span>
+                </a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="kicker">About</p>
+          <h2>Focus: reliable mobile products, end to end</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>
+              Based in <strong>Karachi, Pakistan</strong>. I build and ship production React Native apps —
+              from design handoff and TypeScript codebases through Firebase, REST integrations,
+              IAP monetization, and App Store / Google Play submission.
+            </p>
+            <p>
+              Comfortable as the primary or sole mobile engineer on a product. Earlier roles at
+              mParsec, ABTACH, and Expertizo covered additional client React Native and React web delivery.
+              BS Software Engineering, Sir Syed University (2014–2017).
+            </p>
+          </div>
+          <dl class="skills">
+            <div class="skill-group">
+              <dt>Mobile</dt>
+              <dd>React Native, iOS, Android, Expo, React Navigation</dd>
+            </div>
+            <div class="skill-group">
+              <dt>Languages &amp; state</dt>
+              <dd>TypeScript, JavaScript (ES6+), Redux, Redux Toolkit, Context API</dd>
+            </div>
+            <div class="skill-group">
+              <dt>Monetization &amp; stores</dt>
+              <dd>IAP, Apple StoreKit, Google Play Billing, App Store Connect, Play Console</dd>
+            </div>
+            <div class="skill-group">
+              <dt>Backend &amp; quality</dt>
+              <dd>Firebase, Firestore, Auth, FCM, REST APIs, Jest, React Native Testing Library</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="wrap">
+        <h2>Let’s build something that ships</h2>
+        <p>Open to senior React Native / mobile roles. Send a note, or connect on LinkedIn and GitHub.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="mailto:muhammadumair9290@gmail.com">muhammadumair9290@gmail.com</a>
+          <a class="btn btn-ghost" href="https://linkedin.com/in/umair92" target="_blank" rel="noopener noreferrer">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn-ghost" href="https://github.com/Muhammad-Umair92" target="_blank" rel="noopener noreferrer">GitHub<span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn-ghost" href="tel:+923432462572">+92 343 246 2572</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© 2026 Muhammad Umair</span>
+      <span>
+        <a href="https://github.com/Muhammad-Umair92" target="_blank" rel="noopener noreferrer">github.com/Muhammad-Umair92</a>
+        · Karachi
+      </span>
+    </div>
+  </footer>
+</body>
+</html>
